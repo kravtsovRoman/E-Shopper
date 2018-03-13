@@ -1,4 +1,6 @@
-/*price range*/
+$('.catalog').dcAccordion({
+	speed: 200
+});
 
  $('#sl2').slider();
 
