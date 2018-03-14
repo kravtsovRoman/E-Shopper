@@ -888,6 +888,8 @@ h2.title {
 
 
 .productinfo p{
+  height: 60px;
+  overflow: hidden;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
   font-weight: 400;
