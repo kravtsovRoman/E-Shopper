@@ -13,4 +13,11 @@ class CategoryController extends AppController{
         return $this->render('index', compact('hits'));
     }
 
+    public function actionView($id = null){
+        $id = Yii::$app->request->get('id');
+        $products = Product::find()->where(['category_id' => $id])->all();
+        $category = Category::findOne($id);
+        return $this->render('view', compact('products', 'category'));
+    }
+
 }
