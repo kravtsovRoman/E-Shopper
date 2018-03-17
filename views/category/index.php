@@ -126,7 +126,11 @@ use yii\helpers\Url;
                                             <?= $hit->name ?>
                                         </a>
                                     </p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <a href="<?= Url::to(['cart/add', 'id' => $hit->id]) ?>"
+                                       class="btn btn-default add-to-cart"
+                                       data-id = "<?= $hit->id ?>">
+                                        <i class="fa fa-shopping-cart"></i>Add to cart
+                                    </a>
                                 </div>
                                 <?php if ($hit->new): ?>
                                     <?= Html::img("@web/images/home/new.png", ['alt' => 'Новинка', 'class' => 'new']) ?>
