@@ -4,9 +4,18 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 ?>
 <div class="container">
+
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <h3><?=Yii::$app->session->getFlash('success')?></h3>
+    <?php endif;?>
+
+    <?php if (Yii::$app->session->hasFlash('error')): ?>
+        <h3><?=Yii::$app->session->getFlash('error')?></h3>
+    <?php endif;?>
+
     <?php if(!empty($session['cart'])): ?>
         <div class="table-responsive">
-            <table class="table table-hover table-striped">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>Фото</th>
@@ -29,11 +38,11 @@ use yii\widgets\ActiveForm;
                     </tr>
                 <?php endforeach?>
                 <tr>
-                    <td colspan="4">Итого: </td>
+                    <td colspan="5">Итого: </td>
                     <td><?= $session['cart.qty']?></td>
                 </tr>
                 <tr>
-                    <td colspan="4">На сумму: </td>
+                    <td colspan="5">На сумму: </td>
                     <td><?= $session['cart.sum']?></td>
                 </tr>
                 </tbody>
