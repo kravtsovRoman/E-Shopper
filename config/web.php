@@ -6,13 +6,12 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'defaultRoute' => 'category/index',
     'language' => 'ru-RU',
-    'charset'=>'utf-8',
+    'defaultRoute' => 'category/index',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'C8jo2FZja9AAIrBoOrzW0nlF-znCNeBM',
+            'cookieValidationKey' => 'uvxfBK9B1S8ovnPJGbcAYyRrRCj56Qh3',
             'baseUrl' => '',
         ],
         'cache' => [

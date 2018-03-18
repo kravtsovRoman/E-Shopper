@@ -9,7 +9,6 @@
 body {
   font-family: 'Roboto', sans-serif;
   position: relative;
-  font-weight: 400;
 }
 
 ul li {
@@ -657,13 +656,6 @@ ul.sub-menu {
   margin-bottom: 35px;
   padding-bottom: 20px;
   padding-top: 15px;
-  padding-left: 10px;
-}
-.category-products ul{
-  padding-left: 10px;
-}
-.category-products li{
-  padding: 5px 0 5px 20px;
 }
 .left-sidebar h2, .brands_products h2 {
   color: #FE980F;
@@ -711,6 +703,15 @@ h2.title:before{
 	left: 50%;
 	margin-left: -110px;
 }
+ul.category-products{
+    padding-left: 10px;
+}
+.category-products ul{
+    padding-left: 10px;
+}
+.category-products li{
+    padding: 5px 0 5px 10px;
+}
 
 .category-products .panel {
 	background-color: #FFFFFF;
@@ -720,7 +721,7 @@ h2.title:before{
 	margin-bottom: 0px;
 }
 
-.category-products .panel-default .panel-heading {
+.category-products .panel-default .panel-heading{
   background-color: #FFFFFF;
   border: 0 none;
   color: #FFFFFF;
@@ -741,7 +742,7 @@ h2.title:before{
 }
 
 .category-products .panel-default .badge,
-.category-products .badge{
+.category-products li .badge{
   background:none;
   border-radius: 10px;
   color: #696763;
@@ -754,9 +755,6 @@ h2.title:before{
   text-align: center;
   vertical-align: baseline;
   white-space: nowrap;
-}
-.category-products .badge{
-  padding-right: 20px;
 }
 
 .panel-body ul{
@@ -887,8 +885,6 @@ h2.title {
 
 
 .productinfo p{
-  height: 60px;
-  overflow: hidden;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -1109,8 +1105,6 @@ h2.title {
 .pagination {
   display: inline-block;
   margin-bottom: 25px;
-  margin-left:50%;
-  transform: translateX(-50%);
   margin-top: 0;
   padding-left: 15px;
 }
@@ -1179,7 +1173,9 @@ h2.title {
   margin-top: 10px;
 }
 
-
+.del-item{
+    cursor: pointer;
+}
 
 .view-product {
   position: relative;
@@ -1187,7 +1183,8 @@ h2.title {
 
 .view-product img {
   border: 1px solid #F7F7F0;
-  width: 100%;
+  /*height: 380px;
+  width: 100%;*/
 }
 
 .view-product h3 {
@@ -2154,7 +2151,6 @@ h2.title {
 
 .rating-area {
   border: 1px solid #F7F7F0;
-  direction: block;
   overflow: hidden;
 }
 

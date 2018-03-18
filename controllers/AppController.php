@@ -1,7 +1,13 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Andrey
+ * Date: 08.05.2016
+ * Time: 10:00
+ */
 
 namespace app\controllers;
-use yii\base\Controller;
+use yii\web\Controller;
 
 class AppController extends Controller{
 
@@ -10,4 +16,5 @@ class AppController extends Controller{
         $this->view->registerMetaTag(['name' => 'keywords', 'content' => "$keywords"]);
         $this->view->registerMetaTag(['name' => 'description', 'content' => "$description"]);
     }
-}
+
+} 
