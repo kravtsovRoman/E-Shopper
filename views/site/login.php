@@ -11,7 +11,6 @@ $this->title = 'Вход';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= Yii::$app->getSecurity()->generatePasswordHash('123'); ?>
 
 <div class="site-login container">
     <h1><?= Html::encode($this->title) ?></h1>
