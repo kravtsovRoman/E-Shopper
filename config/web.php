@@ -8,6 +8,12 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru-RU',
     'defaultRoute' => 'category/index',
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'layout' => 'admin'
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -30,6 +36,14 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
+//            'transport' => [
+//                'class' => 'Swift_SmtpTransport',
+//                'host' => 'smtp.gmail.com',
+//                'username' => 'rozario91208@gmail.com',
+//                'password' => '******',
+//                'port' => '587',
+//                'encryption' => 'tls',
+//            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
