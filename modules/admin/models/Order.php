@@ -4,20 +4,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 
-/**
- * This is the model class for table "order".
- *
- * @property string $id
- * @property string $created_at
- * @property string $updated_at
- * @property int $qty
- * @property double $sum
- * @property string $status
- * @property string $name
- * @property string $email
- * @property string $phone
- * @property string $address
- */
+
 class Order extends \yii\db\ActiveRecord
 {
     /**
@@ -28,9 +15,10 @@ class Order extends \yii\db\ActiveRecord
         return 'order';
     }
 
-    /**
-     * @inheritdoc
-     */
+    public function getOrderItems(){
+        return $this->hasMany(OrderItems::className(), ['order_id' => 'id']);
+    }
+
     public function rules()
     {
         return [
