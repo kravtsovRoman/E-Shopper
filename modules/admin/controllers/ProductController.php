@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 
 class ProductController extends Controller
@@ -60,18 +61,19 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Product model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $model->image = UploadedFile::getInstance($model, 'image');
+            if ($model->image){
+                $model->upload();
+            }
+
+            Yii::$app->session->setFlash('success', "Товар {$model->name} обновлен");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
