@@ -8,7 +8,9 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background:;
   position: relative;
+  font-weight:400px;
 }
 
 ul li {
@@ -908,6 +910,7 @@ h2.title {
   transition: height 500ms ease 0s;
   width: 100%;
   display: block;
+  opacity:;
 }
 
 .single-products:hover .product-overlay {
@@ -2151,6 +2154,7 @@ h2.title {
 
 .rating-area {
   border: 1px solid #F7F7F0;
+  direction: block;
   overflow: hidden;
 }
 
@@ -2401,10 +2405,10 @@ h2.title {
 }
 
 .btn.btn-primary {
-  background:#FE980F;
+  /*background:#FE980F;
   border: 0 none;
-  /*border-radius: 0;*/
-  /*margin-top: 16px;*/
+  border-radius: 0;
+  margin-top: 16px;*/
 }
 
 .blank-arrow {

@@ -2,10 +2,8 @@
 
 namespace app\modules\admin\controllers;
 
-use app\controllers\AppController;
 use Yii;
 use app\modules\admin\models\Order;
-use app\modules\admin\models\OrderItems;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrderController extends AppController
+class OrderController extends AppAdminController
 {
     /**
      * @inheritdoc
@@ -39,13 +37,13 @@ class OrderController extends AppController
         $dataProvider = new ActiveDataProvider([
             'query' => Order::find(),
             'pagination' => [
-                'pageSize' => 10
+                'pageSize' => 5
             ],
-//            'sort' => [
-//                'defaultOrder' => [
-//                    'status' => SORT_ASC
-//                ]
-//            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'status' => SORT_ASC
+                ]
+            ],
         ]);
 
         return $this->render('index', [
@@ -57,7 +55,6 @@ class OrderController extends AppController
      * Displays a single Order model.
      * @param string $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
@@ -77,11 +74,11 @@ class OrderController extends AppController
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -89,7 +86,6 @@ class OrderController extends AppController
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
@@ -97,11 +93,11 @@ class OrderController extends AppController
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -109,7 +105,6 @@ class OrderController extends AppController
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
@@ -129,8 +124,8 @@ class OrderController extends AppController
     {
         if (($model = Order::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

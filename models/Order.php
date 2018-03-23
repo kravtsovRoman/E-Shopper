@@ -7,15 +7,31 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 
-
-class Order extends ActiveRecord{
-
-    public static function tableName(){
+/**
+ * This is the model class for table "order".
+ *
+ * @property string $id
+ * @property string $created_at
+ * @property string $updated_at
+ * @property integer $qty
+ * @property double $sum
+ * @property string $status
+ * @property string $name
+ * @property string $email
+ * @property string $phone
+ * @property string $address
+ */
+class Order extends ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
         return 'order';
     }
 
-    public function behaviors()
-    {
+    public function behaviors(){
         return [
             [
                 'class' => TimestampBehavior::className(),
@@ -24,7 +40,7 @@ class Order extends ActiveRecord{
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
                 // если вместо метки времени UNIX используется datetime:
-                 'value' => new Expression('NOW()'),
+                'value' => new Expression('NOW()'),
             ],
         ];
     }
@@ -33,7 +49,9 @@ class Order extends ActiveRecord{
         return $this->hasMany(OrderItems::className(), ['order_id' => 'id']);
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -46,6 +64,9 @@ class Order extends ActiveRecord{
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [

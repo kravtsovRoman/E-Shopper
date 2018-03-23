@@ -24,18 +24,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    <?php $img = $model->getImage();
 
+      $imgPath =  preg_replace('/[0-9]+/','yii2images', $img->getUrl(), 1);
+?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'category_id',
             'name',
-            'content:raw',
+            'content:html',
             'price',
             'keywords',
             'description',
-            'img',
+            [
+                'attribute' => 'image',
+                'value' => "<img src='" . $imgPath . "'>",
+                'format' => 'html',
+            ],
             'hit',
             'new',
             'sale',

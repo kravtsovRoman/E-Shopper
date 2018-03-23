@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Andrey
+ * Date: 14.05.2016
+ * Time: 10:37
+ */
 
 namespace app\controllers;
 use app\models\Product;
@@ -75,35 +81,34 @@ class CartController extends AppController{
     }
 
     public function actionView(){
-        $session =Yii::$app->session;
+        $session = Yii::$app->session;
         $session->open();
         $this->setMeta('Корзина');
         $order = new Order();
         if( $order->load(Yii::$app->request->post()) ){
-           $order->qty = $session['cart.qty'];
-           $order->sum = $session['cart.sum'];
-           if ($order->save()){
-               $this->saveOrderItems($session['cart'], $order->id);
-               Yii::$app->session->setFlash('success', 'Заказ принят');
-               Yii::$app->mailer->compose('order', compact('session'))
-                   ->setFrom(['rozario91208@gmail.com' => 'E-Shopper'])
-                   ->setTo($order->email)
-                   ->setSubject('You order by E-Shopper')
-                   ->send();
-               $session->remove('cart');
-               $session->remove('cart.qty');
-               $session->remove('cart.sum');
-
-               return $this->refresh();
-           }else{
-               Yii::$app->session->setFlash('error', 'Ошибка оформления заказа');
-           }
+            $order->qty = $session['cart.qty'];
+            $order->sum = $session['cart.sum'];
+            if($order->save()){
+                $this->saveOrderItems($session['cart'], $order->id);
+                Yii::$app->session->setFlash('success', 'Ваш заказ принят. Менеджер вскоре свяжется с Вами.');
+                Yii::$app->mailer->compose('order', ['session' => $session])
+                    ->setFrom(['username@mail.ru' => 'yii2.loc'])
+                    ->setTo($order->email)
+                    ->setSubject('Заказ')
+                    ->send();
+                $session->remove('cart');
+                $session->remove('cart.qty');
+                $session->remove('cart.sum');
+                return $this->refresh();
+            }else{
+                Yii::$app->session->setFlash('error', 'Ошибка оформления заказа');
+            }
         }
         return $this->render('view', compact('session', 'order'));
     }
 
     protected function saveOrderItems($items, $order_id){
-        foreach ($items as $id => $item){
+        foreach($items as $id => $item){
             $order_items = new OrderItems();
             $order_items->order_id = $order_id;
             $order_items->product_id = $id;

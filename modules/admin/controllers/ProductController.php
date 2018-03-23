@@ -10,10 +10,14 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
-
+/**
+ * ProductController implements the CRUD actions for Product model.
+ */
 class ProductController extends Controller
 {
-
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -26,7 +30,10 @@ class ProductController extends Controller
         ];
     }
 
-
+    /**
+     * Lists all Product models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
@@ -38,7 +45,11 @@ class ProductController extends Controller
         ]);
     }
 
-
+    /**
+     * Displays a single Product model.
+     * @param string $id
+     * @return mixed
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -46,7 +57,11 @@ class ProductController extends Controller
         ]);
     }
 
-
+    /**
+     * Creates a new Product model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Product();
@@ -54,14 +69,19 @@ class ProductController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Товар {$model->name} добавлен");
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
-
+    /**
+     * Updates an existing Product model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -69,17 +89,20 @@ class ProductController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $model->image = UploadedFile::getInstance($model, 'image');
-            if ($model->image){
+            if( $model->image ){
                 $model->upload();
             }
+            unset($model->image);
+            $model->gallery = UploadedFile::getInstances($model, 'gallery');
+            $model->uploadGallery();
 
             Yii::$app->session->setFlash('success', "Товар {$model->name} обновлен");
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -87,7 +110,6 @@ class ProductController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
@@ -107,8 +129,8 @@ class ProductController extends Controller
     {
         if (($model = Product::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

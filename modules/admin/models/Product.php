@@ -11,11 +11,6 @@ class Product extends \yii\db\ActiveRecord
     public $image;
     public $gallery;
 
-    public static function tableName()
-    {
-        return 'product';
-    }
-
     public function behaviors()
     {
         return [
@@ -25,11 +20,21 @@ class Product extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'product';
+    }
+
     public function getCategory(){
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -38,23 +43,26 @@ class Product extends \yii\db\ActiveRecord
             [['content', 'hit', 'new', 'sale'], 'string'],
             [['price'], 'number'],
             [['name', 'keywords', 'description', 'img'], 'string', 'max' => 255],
-            [['image'], 'file', 'extensions' => 'png, jpg' ],
-//            [['gallery'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 4 ],
+            [['image'], 'file', 'extensions' => 'png, jpg'],
+            [['gallery'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 4],
         ];
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
             'id' => 'ID товара',
             'category_id' => 'Категория',
-            'name' => 'Название',
-            'content' => 'Описание',
+            'name' => 'Наименование',
+            'content' => 'Контент',
             'price' => 'Цена',
             'keywords' => 'Ключевые слова',
             'description' => 'Мета-описание',
             'image' => 'Фото',
+            'gallery' => 'Галерея',
             'hit' => 'Хит',
             'new' => 'Новинка',
             'sale' => 'Распродажа',
@@ -62,11 +70,27 @@ class Product extends \yii\db\ActiveRecord
     }
 
     public function upload(){
-        if ($this->validate()){
+        if($this->validate()){
             $path = 'upload/store/' . $this->image->baseName . '.' . $this->image->extension;
             $this->image->saveAs($path);
+            $this->attachImage($path, true);
+            @unlink($path);
             return true;
-        }else {
+        }else{
+            return false;
+        }
+    }
+
+    public function uploadGallery(){
+        if($this->validate()){
+            foreach($this->gallery as $file){
+                $path = 'upload/store/' . $file->baseName . '.' . $file->extension;
+                $file->saveAs($path);
+                $this->attachImage($path);
+                @unlink($path);
+            }
+            return true;
+        }else{
             return false;
         }
     }

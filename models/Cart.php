@@ -11,7 +11,21 @@ use yii\db\ActiveRecord;
 
 class Cart extends ActiveRecord{
 
+    public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
+
     public function addToCart($product, $qty = 1){
+        $mainImg = $product->getImage();
+
+
+      $imgPath =  preg_replace('/[0-9]+/','yii2images', $mainImg->getUrl('x50'), 1);
+
         if(isset($_SESSION['cart'][$product->id])){
             $_SESSION['cart'][$product->id]['qty'] += $qty;
         }else{
@@ -19,7 +33,7 @@ class Cart extends ActiveRecord{
                 'qty' => $qty,
                 'name' => $product->name,
                 'price' => $product->price,
-                'img' => $product->img
+                'img' => $imgPath
             ];
         }
         $_SESSION['cart.qty'] = isset($_SESSION['cart.qty']) ? $_SESSION['cart.qty'] + $qty : $qty;

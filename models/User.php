@@ -2,24 +2,28 @@
 
 namespace app\models;
 use yii\db\ActiveRecord;
-use Yii;
 
-class User extends ActiveRecord implements \yii\web\IdentityInterface{
+class User extends ActiveRecord implements \yii\web\IdentityInterface
+{
 
-    public static function tableName()
-    {
+    public static function tableName(){
         return 'user';
     }
 
-    public static function findIdentity($id){
-
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentity($id)
+    {
         return static::findOne($id);
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-
+//        return static::findOne(['access_token' => $token]);
     }
 
     /**
@@ -57,19 +61,19 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface{
         return $this->auth_key === $authKey;
     }
 
-
+    /**
+     * Validates password
+     *
+     * @param  string  $password password to validate
+     * @return boolean if password provided is valid for current user
+     */
     public function validatePassword($password)
     {
 //        return $this->password === $password;
-
-        return Yii::$app->security->validatePassword($password, $this->password);
-
-
+        return \Yii::$app->security->validatePassword($password, $this->password);
     }
 
     public function generateAuthKey(){
-        $this->auth_key = Yii::$app->security->generateRandomString();
+        $this->auth_key = \Yii::$app->security->generateRandomString();
     }
-
-
 }

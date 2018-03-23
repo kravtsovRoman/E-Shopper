@@ -16,14 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+
             'id',
 //            'category_id',
-//        Вместо цифр категорий выводим их названия
             [
                 'attribute' => 'category_id',
                 'value' => function($data){
@@ -36,33 +35,31 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'hit',
                 'value' => function($data){
-                    return !$data->hit ? '<span class="text-danger">Нет</span>' :
-                        '<span class="text-success">Да</span>';
+                    return !$data->hit ? '<span class="text-danger">Нет</span>' : '<span class="text-success">Да</span>';
                 },
                 'format' => 'html',
             ],
             [
                 'attribute' => 'new',
                 'value' => function($data){
-                    return !$data->new ? '<span class="text-danger">Нет</span>' :
-                        '<span class="text-success">Да</span>';
+                    return !$data->new ? '<span class="text-danger">Нет</span>' : '<span class="text-success">Да</span>';
                 },
                 'format' => 'html',
             ],
             [
                 'attribute' => 'sale',
                 'value' => function($data){
-                    return !$data->sale ? '<span class="text-danger">Нет</span>' :
-                        '<span class="text-success">Да</span>';
+                    return !$data->sale ? '<span class="text-danger">Нет</span>' : '<span class="text-success">Да</span>';
                 },
                 'format' => 'html',
             ],
-//            'keywords',
-//            'description',
-//            'img',
-//            'hit',
-//            'new',
-//            'sale',
+            // 'keywords',
+            // 'description',
+            // 'img',
+            // 'hit',
+            // 'new',
+            // 'sale',
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
